@@ -29,6 +29,7 @@
 #include "motor.h"
 #include "chassis.h"
 #include "servo.h"
+#include "arm.h"
 #include "proto.h"
 #include "app.h"
 #include "dbg.h"
@@ -129,6 +130,7 @@ int main(void)
   motor_init();
   chassis_init();
   servo_init();
+  arm_init();         
   proto_init(&g_ctx2);
   app_init();
   console_init();

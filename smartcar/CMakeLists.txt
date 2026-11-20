@@ -32,21 +32,7 @@ message("Build type: " ${CMAKE_BUILD_TYPE})
 enable_language(C ASM)
 
 # Create an executable object type
-add_executable(${CMAKE_PROJECT_NAME}
-        Core/Inc/proto.h
-        Core/Src/proto.c
-        Core/Inc/app.h
-        Core/Src/app.c
-        Core/Inc/pca9685.h
-        Core/Src/pca9685.c
-        Core/Inc/servo_profile.h
-        Core/Src/servo_profile.c
-        Core/Inc/servo.h
-        Core/Src/servo.c
-        Core/Inc/dbg.h
-        Core/Src/dbg.c
-        Core/Inc/console.h
-        Core/Src/console.c)
+add_executable(${CMAKE_PROJECT_NAME})
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
@@ -65,6 +51,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}/Core/Src/pca9685.c
         ${CMAKE_CURRENT_LIST_DIR}/Core/Src/servo_profile.c
         ${CMAKE_CURRENT_LIST_DIR}/Core/Src/servo.c
+        ${CMAKE_CURRENT_LIST_DIR}/Core/Src/arm.c
         ${CMAKE_CURRENT_LIST_DIR}/Core/Src/dbg.c
         ${CMAKE_CURRENT_LIST_DIR}/Core/Src/console.c
 )

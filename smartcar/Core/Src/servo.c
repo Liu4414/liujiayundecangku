@@ -79,3 +79,24 @@ void servo_task_10ms(void)
         }
     }
 }
+
+/* 直接按微秒设置目标（arm 层用），会夹到全局行程内 */
+void servo_set_target_us(uint8_t ch, uint16_t us)
+{
+    if (ch >= SERVO_NUM) {
+        return;
+    }
+
+    if (us < SERVO_MIN_US) us = SERVO_MIN_US;
+    if (us > SERVO_MAX_US) us = SERVO_MAX_US;
+
+    servo_prof_set_target(&s_ch[ch].prof, (int32_t)us);
+}
+
+int16_t servo_get_us(uint8_t ch)
+{
+    if (ch >= SERVO_NUM) {
+        return -1;
+    }
+    return (int16_t)s_ch[ch].prof.pos;
+}

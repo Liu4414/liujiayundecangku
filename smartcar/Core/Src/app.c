@@ -2,6 +2,7 @@
 #include "app.h"
 #include "chassis.h"
 #include "servo.h"
+#include "arm.h"
 
 static rc_frame_t s_isr_frame;
 static volatile uint32_t s_last_ms;
@@ -24,9 +25,7 @@ void app_init(void)
 void app_set_manual(uint8_t on)
 {
     s_manual = on;
-    if (on) {
-        chassis_stop();
-    }
+    if (on) chassis_stop();
 }
 
 void app_on_frame(const rc_frame_t *f, uint32_t now)
@@ -38,7 +37,7 @@ void app_on_frame(const rc_frame_t *f, uint32_t now)
 
 void app_task_10ms(uint32_t now)
 {
-    uint8_t i;
+    int32_t scale;
 
     if (s_frame_new) {
         __disable_irq();
@@ -48,7 +47,6 @@ void app_task_10ms(uint32_t now)
         s_have_frame = 1;
     }
 
-    /* 手动模式：命令直接控制电机，app 不再干预 */
     if (s_manual) {
         servo_task_10ms();
         return;
@@ -58,21 +56,23 @@ void app_task_10ms(uint32_t now)
         ((uint32_t)(now - s_last_ms) > APP_TIMEOUT_MS)) {
         chassis_stop();
         s_state = APP_FAILSAFE;
-        } else if (s_frame.flags & 0x01u) {
+        } else if (s_frame.btn & BTN_ESTOP) {
             chassis_stop();
             s_state = APP_ESTOP;
         } else if (s_frame.l2 > 128u) {
             chassis_stop();
             s_state = APP_BRAKE;
         } else {
-            chassis_set((int16_t)(APP_VX_SIGN * (int16_t)s_frame.ly * 10),
-                        (int16_t)(APP_VY_SIGN * (int16_t)s_frame.lx * 10),
-                        (int16_t)(APP_W_SIGN  * (int16_t)s_frame.rx * 10));
+            /* R2 越深越慢：0 → 100%，255 → 50% */
+            scale = 1000 - ((int32_t)s_frame.r2 * 500 / 255);
+
+            chassis_set((int16_t)((int32_t)APP_VX_SIGN * s_frame.ly * 10 * scale / 1000),
+                        (int16_t)((int32_t)APP_VY_SIGN * s_frame.lx * 10 * scale / 1000),
+                        (int16_t)((int32_t)APP_W_SIGN  * s_frame.rx * 10 * scale / 1000));
             chassis_task_10ms();
 
-            for (i = 0; i < SERVO_NUM; i++) {
-                servo_set_norm(i, s_frame.s[i]);
-            }
+            arm_update(&s_frame);
+
             s_state = APP_RUN;
         }
 

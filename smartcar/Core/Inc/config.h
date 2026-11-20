@@ -112,5 +112,28 @@
  * 安全
  * ============================================================ */
 #define APP_TIMEOUT_MS    200
+/* 12 字节帧按键位（和 esp32_ds4_bridge.ino 一致） */
+#define BTN_SQUARE      0x0001u
+#define BTN_CROSS       0x0002u
+#define BTN_CIRCLE      0x0004u
+#define BTN_TRIANGLE    0x0008u
+#define BTN_L1          0x0010u
+#define BTN_R1          0x0020u
+#define BTN_L3          0x0040u
+#define BTN_R3          0x0080u
+#define BTN_SHARE       0x0100u
+#define BTN_OPTIONS     0x0200u
+#define BTN_PS          0x0400u
+#define BTN_DPAD_UP     0x0800u
+#define BTN_DPAD_DOWN   0x1000u
+#define BTN_DPAD_LEFT   0x2000u
+#define BTN_DPAD_RIGHT  0x4000u
 
+/* 急停键：默认 ×；要改成 □ 就换 BTN_SQUARE */
+#define BTN_ESTOP       BTN_CROSS
+
+/* 机械臂动作速率 */
+#define ARM_STICK_DZ     8
+#define ARM_STICK_RATE   1500    /* us/s */
+#define ARM_BTN_RATE     800     /* us/s */
 #endif /* CONFIG_H */
