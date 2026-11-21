@@ -28,7 +28,7 @@
 #define M2_IN1_PIN     GPIO_PIN_4
 #define M2_IN2_PORT    GPIOA
 #define M2_IN2_PIN     GPIO_PIN_5
-#define M2_INVERT      0
+#define M2_INVERT      1
 
 /* ============================================================
  * 电机 3：左中 L2（TB6612 #2 的 A 通道）
@@ -50,7 +50,7 @@
 #define M4_IN1_PIN     GPIO_PIN_12
 #define M4_IN2_PORT    GPIOB
 #define M4_IN2_PIN     GPIO_PIN_8
-#define M4_INVERT      0
+#define M4_INVERT      1
 
 /* ============================================================
  * 电机 5：左后 L3（TB6612 #3 的 A 通道）
@@ -61,7 +61,7 @@
 #define M5_IN1_PIN     GPIO_PIN_9
 #define M5_IN2_PORT    GPIOB
 #define M5_IN2_PIN     GPIO_PIN_12
-#define M5_INVERT      0
+#define M5_INVERT      1
 
 /* ============================================================
  * 电机 6：右后 R3（TB6612 #3 的 B 通道）
@@ -72,7 +72,7 @@
 #define M6_IN1_PIN     GPIO_PIN_13
 #define M6_IN2_PORT    GPIOB
 #define M6_IN2_PIN     GPIO_PIN_15
-#define M6_INVERT      0
+#define M6_INVERT      1
 
 /* ============================================================
  * 公共：三片 TB6612 的 STBY 并联到 PB14
