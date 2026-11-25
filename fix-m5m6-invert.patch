@@ -1,0 +1,20 @@
+--- a/smartcar/Core/Inc/config.h
++++ b/smartcar/Core/Inc/config.h
+@@ -61,7 +61,7 @@
+ #define M5_IN1_PIN     GPIO_PIN_9
+ #define M5_IN2_PORT    GPIOB
+ #define M5_IN2_PIN     GPIO_PIN_12
+-#define M5_INVERT      0
++#define M5_INVERT      1
+ 
+ /* ============================================================
+  * 电机 6：右后 R3（TB6612 #3 的 B 通道）
+@@ -72,7 +72,7 @@
+ #define M6_IN1_PIN     GPIO_PIN_13
+ #define M6_IN2_PORT    GPIOB
+ #define M6_IN2_PIN     GPIO_PIN_15
+-#define M6_INVERT      0
++#define M6_INVERT      1
+ 
+ /* ============================================================
+  * 公共：三片 TB6612 的 STBY 并联到 PB14

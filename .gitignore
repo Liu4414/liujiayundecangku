@@ -1,0 +1,18 @@
+# 构建产物
+build/
+cmake-build-*/
+*.o
+*.obj
+*.elf
+*.bin
+*.hex
+*.map
+
+# IDE
+.idea/
+.vscode/
+*.ioc.bak
+
+# 系统
+.DS_Store
+Thumbs.db
